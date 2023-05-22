@@ -1,0 +1,11 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    ViewData["Title"] = "GetCookies";
+   
+}
+<h1> Session value in <span id="span1"></span></h1>
+<script>
+    var a ='@HttpContextAccessor.HttpContext.Session.GetString("sessionkey")';
+    document.getElementById('span1').innerHTML=a;
+</script>
