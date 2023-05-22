@@ -20,12 +20,28 @@ namespace WebApplication3.Controllers
             {
                 return RedirectToAction("Login");
             }
+            ClaimsIdentity identity = null;
+            bool isAuthenticated = false;
+            if (userName == "Admin" && password == "password")
+            {
+                 identity = new ClaimsIdentity(new[] {
+                    new Claim(ClaimTypes.Name, userName),
+                    new Claim(ClaimTypes.Role,"Admin")
+                },
+                 CookieAuthenticationDefaults.AuthenticationScheme);
+                isAuthenticated = true;
+            }
             if (userName == "yogesh" && password == "dotnet")
             {
-                var identity = new ClaimsIdentity(new[] {
-                    new Claim(ClaimTypes.Name, userName)
+                identity = new ClaimsIdentity(new[] {
+                    new Claim(ClaimTypes.Name, userName),
+                     new Claim(ClaimTypes.Role,"User")
                 },
-                    CookieAuthenticationDefaults.AuthenticationScheme);
+                   CookieAuthenticationDefaults.AuthenticationScheme);
+                isAuthenticated = true;
+            }
+            if (isAuthenticated)
+            {
                 var principal = new ClaimsPrincipal(identity);
                 var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 return RedirectToAction("Index", "Home");
