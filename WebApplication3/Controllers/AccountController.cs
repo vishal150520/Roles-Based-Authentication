@@ -16,7 +16,7 @@ namespace WebApplication3.Controllers
         [HttpPost]
         public IActionResult Login(string userName,string password)
         {
-            if (!string.IsNullOrEmpty(userName) && string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
             {
                 return RedirectToAction("Login");
             }
